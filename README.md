@@ -1,8 +1,6 @@
 # ChatForWork
 
-## Начало работы
-
- 1. Создадим базу данных 
+Для демонстрационного запуска понадиться MySQL и создать базу данных 
 ```sql
 CREATE TABLE chat (
 id int NOT NULL AUTO_INCREMENT, 
