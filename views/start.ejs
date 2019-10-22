@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible">
+	<!-- React lib -->
+	<script src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+  	<script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+  	<script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+	<!-- BootstrapCDN  -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+	<link rel="stylesheet" type="text/css" href="/public/css/style.css">
+	<!-- jquery -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+	<title>WorkChat</title>
+
+</head>
+<body>
+ 	<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+	  	<h5 class="my-0 mr-md-auto font-weight-normal">Chat For Work</h5>
+		<br>
+		<a class="btn btn-outline-dark" href="#">Sign up</a>	
+	</div>
+	<div class="container">
+		<div class="py-5 text-center">			
+	</div>
+		<div class="row">
+			<div class="col-md-6 mb-3"> 
+				<!-- <form method="POST"></form> -->
+				<form id="messForm">
+					<p class="col-md-6 lead"> Enter your name to start</p><br>
+					<input type="text" name="name" id="name" class="form-control" placeholder="Enter your name">
+					<br>
+					<textarea name="message" id="message" class="form-control" placeholder="Enter message"></textarea>
+					<br>
+					<input type="submit" value="submit" class="btn btn-dark">
+				</form>
+			</div> 
+			<div class="col-md-6"> <br>
+				<div id="all_mess"></div>	
+				<div id="out_mess"></div>
+
+
+				
+			</div>
+		</div>
+	</div>
+	
+	<script src="/public/js/index.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="/socket.io/socket.io.js"></script>
+</body>
+</html>
