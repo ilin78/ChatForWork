@@ -2,7 +2,7 @@
 
 ## Начало работы
 
- 1. Создадим базу данных и добавим данные
+ 1. Создадим базу данных 
 ```sql
 CREATE TABLE chat (
 id int NOT NULL AUTO_INCREMENT, 
