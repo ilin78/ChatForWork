@@ -24,30 +24,44 @@ app.get('/',  (req, res) => {
 	console.log(req.url)
 	res.render('start', {})	
 });	
-users = [] // хранит всех пользователей с которыми есть соединение
+
+
+var clients = [];
+
+io.sockets.on('connect', function(client) {
+    console.log(clients.push(client)); 
+    client.on('disconnect', function() {
+    clients.splice(clients.indexOf(client), 1);
+    });
+});
+
+users = []; // хранит всех пользователей с которыми есть соединение
 connections = [] // помещяем сюда все подключения на текущий момент
 /*
 *		io.sockets.on - отслеживает 'connection' и вызывает  function, 
 *		которая содержит объект socket. 
 */		 
+
 io.sockets.on('connection', (socket) => {	
 	/*
 	* 	.push(socket) - добавление в массив connections
 	*	.splice(connections.indexOf(socket), 1) - находит индекс 
 	*	объекта и удаляет 1 элемент
 	*/
-	console.log('connect new user')
-	connections.push(socket);
-	conn.query("SELECT * FROM chat", (error,result) => {
-		if(error) error; 
-		var ret = result;		
-		socket.emit('data out', ret);
-		console.log('TEST'+ret);
-	});
-	
-	socket.on('disconnect', (data) => {
-		console.log('user disconnected')
+	users=connections.push(socket);	
+	console.log('connect new user' + users)
+	socket.on('disconnect', (data) => {	
+		--users;	
+		console.log('user disconnected ' + users)
+		
 		connections.splice(connections.indexOf(socket), 1)
+	});
+
+	conn.query("SELECT * FROM chat", (error,result) => {
+		if(error) error;
+		var ret = result;		
+		socket.emit('data out', ret, users);		// исправлено <- io. отправляет ret всем в т ч кто уже получил
+		console.log('TEST'+ret);
 	});
 	/*
 	*	когда вызовется 'send mess' -  обратиться к функции emit()
@@ -65,6 +79,5 @@ io.sockets.on('connection', (socket) => {
 		  	if(err) return console.log(err);		  
 		})
 	})
-
 })
 console.log('Server run, port 3000')
