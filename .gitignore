@@ -12,6 +12,7 @@ lerna-debug.log*
 
 # OS
 .DS_Store
+*.txt
 
 # Tests
 /coverage
@@ -36,3 +37,4 @@ lerna-debug.log*
 # config
 
 src/config/local.json
+
