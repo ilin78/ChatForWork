@@ -6,12 +6,15 @@ var bodyParser = require('body-parser')
 var users = []; 
 var connections = [];
 var clients = [];
+
 app.use('/public', express.static('public'))
 app.set('view engine', 'ejs', 'js')
+
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
-server.listen(3000)
+
+server.listen(3000);
+
 var mysql = require('mysql');
-//time: new Date().
 var conn = mysql.createConnection({
   host: 'localhost',
   user: 'admin',
@@ -25,17 +28,15 @@ app.get('/',  (req, res) => {
 	res.render('start', {})	
 });	
 io.sockets.on('connect', function(client) {
-    console.log(clients.push(client)); 
+    clients.push(client);
     client.on('disconnect', function() {
     clients.splice(clients.indexOf(client), 1);
     });
 });
 io.sockets.on('connection', (socket) => {	
 	users=connections.push(socket);	
-	console.log('connect new user' + users)
 	socket.on('disconnect', (data) => {	
 		--users;	
-		console.log('user disconnected ' + users)
 		connections.splice(connections.indexOf(socket), 1)
 	});
 	conn.query("SELECT * FROM chat", (error,result) => {
@@ -45,18 +46,15 @@ io.sockets.on('connection', (socket) => {
 	});
 	
 	socket.on('send mess', (data) => {
-		console.log({ name: data.name, mess: data.mess})
-		io.sockets.emit('add mess', {
+		var data2 = {
 			mess: data.mess, 
 			name: data.name,
 			time: new Date().toTimeString().replace(/.*(\d{2}:\d{2}:\d{2}).*/, "$1")
-		});
+		}
+		io.sockets.emit('add mess', data2);
 		const name = data.name;
 		const message = data.mess;
-		var time = new Date().toTimeString().replace(/.*(\d{2}:\d{2}:\d{2}).*/, "$1");
-		time.toString();
-		console.log('time: '+time)
-		
+		const time = data2.time;
 		var query = conn.query("INSERT INTO chat (name, message, time) VALUES (?,?,?)", [name, message, time
 		], (err, data) => {
 		  	if(err) return console.log(err);		  
