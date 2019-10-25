@@ -9,6 +9,5 @@ name varchar(100) NOT NULL,
 message varchar(400),
 time varchar(50),
 PRIMARY KEY (id));
-);
 ```  
 
